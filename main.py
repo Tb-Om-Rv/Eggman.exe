@@ -218,14 +218,14 @@ class Player(pygame.sprite.Sprite):
 
         # which frameset to use
         if boost_active:
-            self.boost_sound.play()
+
             self.frame_timer += 1
             # slows the animation speed instead of it running at 120 fps
             frame_index = (self.frame_timer // 8) % len(self.frames_boost)
             raw_image = self.frames_boost[frame_index]
         elif on_ground == False:
             if y_velocity < 0:
-                self.jump_sound.play()
+
                 self.frame_timer += 1
                 # VIBE CODE: locks it to the last frame when it ends
                 frame_index = min(self.frame_timer // 30, 1)
@@ -619,6 +619,7 @@ def main():
                         boost_active = True
                         boost_start_time = boost_time_now
                         boost_timer_initial = boost_time_now
+                        player.boost_sound.play()
 
             # exit spawning
             if time_remaining <= 80 and ring_spawned == False:
@@ -714,10 +715,12 @@ def main():
                 if space_held == False:
                     if on_ground:
                         y_vel = -jump_height
+                        player.jump_sound.play()
 
                     elif jump_time_cooldown == 0:
                         y_vel = -jump_height
                         jump_timer_initial = jump_time_now
+                        player.double_jump_sound.play()
 
                     space_held = True
 
